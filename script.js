@@ -29,3 +29,33 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+// ------Scrolling------
+
+const learnMoreBtn = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+learnMoreBtn.addEventListener('click', function () {
+  // this gets the coordinates
+  const s1cords = section1.getBoundingClientRect();
+  // ^ cords are relative to view screen.
+  console.log(`Learn more button pressed`);
+
+  // // the actual scroll
+  // window.scrollTo(
+  //   s1cords.left + window.pageXOffset,
+  //   // ^ the page offset is from where you are to the end of --
+  //   // -- the page. x=left & y=top
+  //   s1cords.top + window.pageYOffset
+  // );
+
+  // // we can add a behavior to the scroll
+  // window.scrollTo({
+  //   left: s1cords.left + window.pageXOffset,
+  //   top: s1cords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  // MOST MODERN WAY
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
