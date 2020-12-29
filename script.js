@@ -9,7 +9,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const openModal = function (e) {
-  e.preventDefualt();
+  e.preventDefault();
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
@@ -39,7 +39,6 @@ learnMoreBtn.addEventListener('click', function () {
   // this gets the coordinates
   const s1cords = section1.getBoundingClientRect();
   // ^ cords are relative to view screen.
-  console.log(`Learn more button pressed`);
 
   // // the actual scroll
   // window.scrollTo(
@@ -59,3 +58,63 @@ learnMoreBtn.addEventListener('click', function () {
   // MOST MODERN WAY
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  // this works because as the parent element of all the--
+  // --nodes all of thier event listeners bubble up to the==
+  // --parent element. So control them all thier.
+  if (e.target.classList.contains('nav__link')) {
+    const currentId = e.target.getAttribute('href');
+    // ^ has to be the element 'e' being clicked.
+    document.querySelector(currentId).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+// // querySelectorAll returns all the nodes in a node list. the --
+// // --node list is similiar to an array. Its like an array of nodes.
+
+// document.querySelectorAll('.nav__link').forEach(function (element) {
+//   element.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     // ^ prevents automaticaly going to the href location.
+
+//     // the this keyword points to the current element
+//     const currentId = this.getAttribute('href');
+//     // ^ this can now be used to call an element
+//     console.log(currentId);
+//     document.querySelector(currentId).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+// ------- // ^ this way of doing it could impact performance --
+// -- because theres a function for every node in the list.
+
+// ---------------------------------------
+// ----------Notes from lectures----------
+// ---------------------------------------
+
+/*
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+
+  // console.log(`Link is my hero`);
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log(randomColor());
+
+  console.log(`Linksss is my hero`);
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  console.log(`Nav is my hero`);
+});
+
+*/
