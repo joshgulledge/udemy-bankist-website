@@ -1,7 +1,8 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
+// -------------------------
+// -------Modal Window------
+// -------------------------
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -30,7 +31,9 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// ------Scrolling------
+// -------------------------
+// --------Scrolling--------
+// -------------------------
 
 const learnMoreBtn = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
@@ -88,6 +91,33 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // });
 // ------- // ^ this way of doing it could impact performance --
 // -- because theres a function for every node in the list.
+
+// -------------------------
+// --------  Tabs   --------
+// -------------------------
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (t) {
+  const clickedTab = t.target.closest('.operations__tab');
+
+  // guard clause - takes you out of function
+  if (!clickedTab) return;
+
+  // active tab
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  clickedTab.classList.add('operations__tab--active');
+
+  // active content area
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+  document
+    .querySelector(`.operations__content--${clickedTab.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
 
 // ---------------------------------------
 // ----------Notes from lectures----------
