@@ -1,13 +1,22 @@
 'use strict';
 
-// -------------------------
-// -------Modal Window------
-// -------------------------
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+
+const topMenu = document.querySelector('.nav');
+
+const learnMoreBtn = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// -------------------------
+// -------Modal Window------
+// -------------------------
 
 const openModal = function (e) {
   e.preventDefault();
@@ -34,9 +43,6 @@ document.addEventListener('keydown', function (e) {
 // -------------------------
 // --------Scrolling--------
 // -------------------------
-
-const learnMoreBtn = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
 
 learnMoreBtn.addEventListener('click', function () {
   // this gets the coordinates
@@ -96,12 +102,10 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // --------  Tabs   --------
 // -------------------------
 
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
-
 tabsContainer.addEventListener('click', function (t) {
   const clickedTab = t.target.closest('.operations__tab');
+  // ^ use closest because it has a child element--
+  // --that you might be able to click on
 
   // guard clause - takes you out of function
   if (!clickedTab) return;
@@ -118,6 +122,34 @@ tabsContainer.addEventListener('click', function (t) {
     .querySelector(`.operations__content--${clickedTab.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// ---------------------------------------
+// ----------Menu Fade Animation----------
+// ---------------------------------------
+
+const hoverHandler = function (n) {
+  if (n.target.classList.contains('nav__link')) {
+    const hoveredOver = n.target;
+    const siblings = hoveredOver.closest('.nav').querySelectorAll('.nav__link');
+    const logo = hoveredOver.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== hoveredOver) {
+        el.style.opacity = this;
+        // el.style.opacity = opacity (second argumnet)
+      }
+      logo.style.opacity = this;
+      // logo.style.opacity = opacity (second argumnet)
+    });
+  }
+};
+
+// topMenu.addEventListener('mouseover', function (e) {
+//   hoverHandler(e, 0.5);
+// });
+topMenu.addEventListener('mouseover', hoverHandler.bind(0.5));
+
+topMenu.addEventListener('mouseout', hoverHandler.bind(1));
 
 // ---------------------------------------
 // ----------Notes from lectures----------
