@@ -149,7 +149,22 @@ const hoverHandler = function (n) {
 // });
 topMenu.addEventListener('mouseover', hoverHandler.bind(0.5));
 
+// topMenu.addEventListener('mouseover', function (e) {
+//   hoverHandler(e, 1);
+// });
 topMenu.addEventListener('mouseout', hoverHandler.bind(1));
+
+// ---------------------------------------
+// ---------- Sticky Navigation ----------
+// ---------------------------------------
+
+const initialCoords = section1.getBoundingClientRect();
+
+window.addEventListener('scroll', function () {
+  if (initialCoords.top < window.scrollY) {
+    topMenu.classList.add('sticky');
+  } else topMenu.classList.remove('sticky');
+});
 
 // ---------------------------------------
 // ----------Notes from lectures----------
