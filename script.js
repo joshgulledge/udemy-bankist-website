@@ -158,13 +158,36 @@ topMenu.addEventListener('mouseout', hoverHandler.bind(1));
 // ---------- Sticky Navigation ----------
 // ---------------------------------------
 
-const initialCoords = section1.getBoundingClientRect();
+// const initialCoords = section1.getBoundingClientRect();
 
-window.addEventListener('scroll', function () {
-  if (initialCoords.top < window.scrollY) {
+// window.addEventListener('scroll', function () {
+//   if (initialCoords.top < window.scrollY) {
+//     topMenu.classList.add('sticky');
+//   } else topMenu.classList.remove('sticky');
+// });
+
+// ^ not an efficient way becuase scroll is always firing
+
+const header = document.querySelector('.header');
+const navHeight = Number(topMenu.getBoundingClientRect().height);
+
+const obsCallBack = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) {
     topMenu.classList.add('sticky');
-  } else topMenu.classList.remove('sticky');
-});
+  } else {
+    topMenu.classList.remove('sticky');
+  }
+};
+
+const obsObj = {
+  root: null,
+  threshold: 0,
+  rootMargin: `${navHeight * -1}px`,
+};
+
+const headerObserver = new IntersectionObserver(obsCallBack, obsObj);
+headerObserver.observe(header);
 
 // ---------------------------------------
 // ----------Notes from lectures----------
