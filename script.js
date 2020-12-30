@@ -213,7 +213,7 @@ const sectionObserver = new IntersectionObserver(sectObsCallBack, sectObsObj);
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 
 // ---------------------------------------
@@ -249,6 +249,51 @@ const imgObsObj = {
 const imgObserver = new IntersectionObserver(loadImage, imgObsObj);
 
 imgTargets.forEach(img => imgObserver.observe(img));
+
+// ---------------------------------------
+// ----------      Slider       ----------
+// ---------------------------------------
+
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const maxSlide = slides.length - 1;
+let currentSlide = 0;
+
+const moveToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%`)
+  );
+  // ^ this puts all slides side by side
+};
+
+const slideForward = function () {
+  if (currentSlide === maxSlide) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+};
+
+const slideToTheBack = function () {
+  if (currentSlide === 0) {
+    currentSlide = maxSlide;
+  } else {
+    currentSlide--;
+  }
+};
+
+moveToSlide(0);
+
+btnRight.addEventListener('click', function () {
+  slideForward();
+  moveToSlide(currentSlide);
+});
+
+btnLeft.addEventListener('click', function () {
+  slideToTheBack();
+  moveToSlide(currentSlide);
+});
 
 // ---------------------------------------
 // ----------Notes from lectures----------
