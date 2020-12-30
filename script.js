@@ -190,6 +190,32 @@ const headerObserver = new IntersectionObserver(obsCallBack, obsObj);
 headerObserver.observe(header);
 
 // ---------------------------------------
+// ----------  Reveal Sections  ----------
+// ---------------------------------------
+
+const allSections = document.querySelectorAll('.section');
+
+const sectObsCallBack = function (entries, observer) {
+  const [entry] = entries;
+  if (entry.isIntersecting) {
+    entry.target.classList.remove('section--hidden');
+    observer.unobserve(entry.target);
+  }
+  console.log(entry);
+};
+
+const sectObsObj = {
+  root: null,
+  threshold: 0.2,
+};
+
+const sectionObserver = new IntersectionObserver(sectObsCallBack, sectObsObj);
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+// ---------------------------------------
 // ----------Notes from lectures----------
 // ---------------------------------------
 
