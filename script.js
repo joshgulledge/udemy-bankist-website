@@ -181,6 +181,7 @@ const obsCallBack = function (entries) {
 };
 
 const obsObj = {
+  // the null here just means the screen view
   root: null,
   threshold: 0,
   rootMargin: `${navHeight * -1}px`,
@@ -201,7 +202,6 @@ const sectObsCallBack = function (entries, observer) {
     entry.target.classList.remove('section--hidden');
     observer.unobserve(entry.target);
   }
-  console.log(entry);
 };
 
 const sectObsObj = {
@@ -215,6 +215,41 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+// ---------------------------------------
+// ----------  Lazy Load Images ----------
+// ---------------------------------------
+
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImage = function (entries, obs) {
+  const [entry] = entries;
+
+  // stops here if not true
+  if (!entry.isIntersecting) return;
+
+  // replace the src img
+  entry.target.src = entry.target.dataset.src;
+  // ^ see html document
+
+  entry.target.addEventListener('load', () =>
+    entry.target.classList.remove('lazy-img')
+  );
+  // ^ use the event listner for when the img is loaded--
+  // --for slow internet to use blur until img is ready
+  obs.unobserve(entry.target);
+};
+
+const imgObsObj = {
+  root: null,
+  threshold: 0,
+  rootMargin: '50px',
+};
+
+const imgObserver = new IntersectionObserver(loadImage, imgObsObj);
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
 // ---------------------------------------
 // ----------Notes from lectures----------
 // ---------------------------------------
